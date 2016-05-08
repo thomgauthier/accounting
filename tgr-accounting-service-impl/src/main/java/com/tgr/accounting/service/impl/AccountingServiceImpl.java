@@ -20,6 +20,8 @@ import com.tgr.accounting.service.api.dto.DeleteEntryResponse;
 import com.tgr.accounting.service.api.dto.EntryRequest;
 import com.tgr.accounting.service.api.dto.EntryResponse;
 import com.tgr.accounting.service.api.dto.LoadEntryRequest;
+import com.tgr.accounting.service.api.dto.SearchEntryRequest;
+import com.tgr.accounting.service.api.dto.SearchEntryResponse;
 import com.tgr.accounting.service.api.model.AnnualBalanceModel;
 import com.tgr.accounting.service.api.model.EntryModel;
 import com.tgr.accounting.service.api.service.AccountingService;
@@ -119,6 +121,21 @@ public class AccountingServiceImpl extends AbstractService implements Accounting
 		entryRepository.delete(entryEntity);
 		
 		return DeleteEntryResponse.TRUE;
+	}
+	
+	public SearchEntryResponse searchEntry(SearchEntryRequest request) {
+		
+		if (request == null) throw new ServiceException();
+		if (request.getCriteria() == null) throw new ServiceException();
+		
+		List<EntryEntity> entries = entryRepository.search(request.getCriteria());
+		
+		List<EntryModel> models = new ArrayList<EntryModel>();
+		for (EntryEntity entry : entries) {
+			models.add(mapper.map(entry, EntryModel.class));
+		}
+		
+		return new SearchEntryResponse(models);
 	}
 
 	public AnnualBalanceResponse readBalance(AnnualBalanceRequest request) {

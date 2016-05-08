@@ -6,11 +6,14 @@ import javax.ws.rs.core.Response.Status;
 import org.jboss.resteasy.client.ClientRequest;
 import org.jboss.resteasy.client.ClientResponse;
 
+import com.tgr.accounting.service.api.criteria.EntryCriteria;
 import com.tgr.accounting.service.api.dto.AnnualBalanceRequest;
 import com.tgr.accounting.service.api.dto.AnnualBalanceResponse;
 import com.tgr.accounting.service.api.dto.EntryRequest;
 import com.tgr.accounting.service.api.dto.EntryResponse;
 import com.tgr.accounting.service.api.dto.LoadEntryRequest;
+import com.tgr.accounting.service.api.dto.SearchEntryRequest;
+import com.tgr.accounting.service.api.dto.SearchEntryResponse;
 import com.tgr.accounting.service.api.model.EntryModel;
 import com.tgr.accounting.service.api.type.AmountType;
 import com.tgr.accounting.service.api.type.PaymentType;
@@ -21,11 +24,41 @@ public class AccountingClient {
 	private static final String URI_LOAD = "http://localhost:8080/tgr-accounting-webapp/AccountingService/load";
 	private static final String URI_CREATE = "http://localhost:8080/tgr-accounting-webapp/AccountingService/create";
 	private static final String URI_BALANCE = "http://localhost:8080/tgr-accounting-webapp/AccountingService/readBalance";
+	private static final String URI_SEARCH_ENTRY = "http://localhost:8080/tgr-accounting-webapp/AccountingService/searchEntry";
 	
 	public static void main(String[] args) {
 //		create();
 //		load();
-		searchBalance();
+//		searchBalance();
+		searchEntry();
+	}
+	
+	private static void searchEntry() {
+		ClientRequest request = new ClientRequest(URI_SEARCH_ENTRY);
+
+		EntryCriteria criteria = new EntryCriteria();
+		criteria.setStartYear(2015);
+		
+		request.body(MediaType.APPLICATION_JSON, new SearchEntryRequest(criteria));
+		request.accept(MediaType.APPLICATION_JSON_TYPE);
+		request.header("login", "toto");
+		
+		SearchEntryResponse entryResponse = null;
+		ClientResponse<SearchEntryResponse> clientResponse;
+		try {
+			clientResponse = request.post(SearchEntryResponse.class);
+			if (clientResponse.getResponseStatus().equals(Status.OK)) {
+				entryResponse = clientResponse.getEntity();
+				for (EntryModel model : entryResponse.getModels()) {
+					System.out.println("Result = " + model.toString());
+				}
+			} else {
+				String reason = clientResponse.getEntity(String.class);
+				throw new ServiceException(reason);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	private static void searchBalance() {

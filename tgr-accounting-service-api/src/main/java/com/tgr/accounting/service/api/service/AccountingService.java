@@ -10,6 +10,8 @@ import com.tgr.accounting.service.api.dto.DeleteEntryResponse;
 import com.tgr.accounting.service.api.dto.EntryRequest;
 import com.tgr.accounting.service.api.dto.EntryResponse;
 import com.tgr.accounting.service.api.dto.LoadEntryRequest;
+import com.tgr.accounting.service.api.dto.SearchEntryRequest;
+import com.tgr.accounting.service.api.dto.SearchEntryResponse;
 import com.tgr.fwk.service.Service;
 
 
@@ -31,6 +33,10 @@ public interface AccountingService extends Service {
 	@POST
 	@Path("/delete")
 	DeleteEntryResponse delete(DeleteEntryRequest request);
+	
+	@POST
+	@Path("/searchEntry")
+	SearchEntryResponse searchEntry(SearchEntryRequest request);
 	
 	@POST
 	@Path("/readBalance")
