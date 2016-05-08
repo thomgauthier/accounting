@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<hibernate-configuration>
+
+	<session-factory>
+		<!-- Configuration hibernate -->
+
+		<property name="hibernate.connection.datasource">java:jboss/datasources/PostgreDS</property>
+		<property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+		<property name="hibernate.show_sql">false</property>
+		<property name="hibernate.id.new_generator_mappings">true</property>
+
+<!-- 		<property name="hibernate.connection.datasource">java:/ExampleDS</property> -->
+<!-- 		<property name="hibernate.dialect">org.hibernate.dialect.H2Dialect</property> -->
+<!-- 		<property name="hibernate.show_sql">false</property> -->
+<!-- 		<property name="hibernate.id.new_generator_mappings">true</property> -->
+<!-- 		<property name="itn.startSequence">1000000</property> -->
+	</session-factory>
+</hibernate-configuration>

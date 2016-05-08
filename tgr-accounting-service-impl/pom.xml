@@ -1,0 +1,43 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>tgr-accounting-app</groupId>
+	<artifactId>tgr-accounting-service-impl</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>tgr-accounting-service-impl</name>
+	<description>TGR's Accounting Service Implementation</description>
+	
+	<dependencies>
+		<dependency>
+			<groupId>tgr-framework</groupId>
+			<artifactId>tgr-framework-service</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>tgr-framework</groupId>
+			<artifactId>tgr-framework-persistence</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>tgr-accounting-app</groupId>
+			<artifactId>tgr-accounting-service-api</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+
+		<dependency>
+			<groupId>net.sf.dozer</groupId>
+			<artifactId>dozer</artifactId>
+			<version>5.5.1</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+			<version>1.1.0.Final</version>
+		</dependency>
+				
+			
+	</dependencies>
+	
+</project>

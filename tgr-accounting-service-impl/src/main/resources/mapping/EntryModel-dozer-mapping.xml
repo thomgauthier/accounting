@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://dozer.sourceforge.net
+          http://dozer.sourceforge.net/schema/beanmapping.xsd">
+
+	<configuration>
+		<custom-converters>
+			<converter type="com.tgr.accounting.converter.EntryConverter">
+				<class-a>com.tgr.accounting.entity.EntryEntity</class-a>
+				<class-b>com.tgr.accounting.service.api.model.EntryModel</class-b>
+			</converter>
+		</custom-converters>
+	</configuration>
+</mappings>
