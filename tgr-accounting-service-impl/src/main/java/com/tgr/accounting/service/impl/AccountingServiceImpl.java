@@ -2,19 +2,15 @@ package com.tgr.accounting.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
-import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
-import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
 
 import org.dozer.DozerBeanMapper;
 
 import com.tgr.accounting.entity.EntryEntity;
 import com.tgr.accounting.repository.EntryRepository;
+import com.tgr.accounting.service.InternalValidationService;
 import com.tgr.accounting.service.api.dto.AnnualBalanceRequest;
 import com.tgr.accounting.service.api.dto.AnnualBalanceResponse;
 import com.tgr.accounting.service.api.dto.DeleteEntryRequest;
@@ -31,6 +27,8 @@ import com.tgr.fwk.service.AbstractService;
 @Transactional
 public class AccountingServiceImpl extends AbstractService implements AccountingService {
 
+	@Inject
+	private InternalValidationService validationService;
 	@Inject
 	private EntryRepository entryRepository;
 	private DozerBeanMapper mapper;
@@ -67,7 +65,7 @@ public class AccountingServiceImpl extends AbstractService implements Accounting
 		
 		EntryEntity entity = mapper.map(request.getModel(), EntryEntity.class);
 		
-//		entity = entryRepository.insert(entity);
+		entity = entryRepository.insert(entity);
 		
 		EntryModel result = mapper.map(entity, EntryModel.class);
 		
@@ -84,7 +82,7 @@ public class AccountingServiceImpl extends AbstractService implements Accounting
 		
 		EntryEntity entity = mapper.map(request.getModel(), EntryEntity.class);
 
-//		entity = entryRepository.update(entity);
+		entity = entryRepository.update(entity);
 
 		EntryModel result = mapper.map(entity, EntryModel.class);
 		
@@ -92,23 +90,8 @@ public class AccountingServiceImpl extends AbstractService implements Accounting
 	}
 	
 	private void validateValues(EntryModel model) {
-		ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-		Validator validator = factory.getValidator();
 
-		Set<ConstraintViolation<EntryModel>> cvs = validator.validate(model);
-		
-		if (!cvs.isEmpty()) {
-			StringBuilder sb = new StringBuilder("Impossible to validate data on object [" + model.getClass().getSimpleName() + "] : \n");
-			for (ConstraintViolation<EntryModel> cv : cvs) {
-				sb.append(cv.getRootBeanClass().getSimpleName());
-				sb.append(".");
-				sb.append(cv.getPropertyPath());
-				sb.append(" ");
-				sb.append(cv.getMessage());
-				sb.append("\n");
-			}
-			throw new ServiceException(sb.toString());
-		}
+		validationService.validateWithException(model);
 		
 		if (Double.compare(model.getAmount(), 0D) == 0) {
 			throw new ServiceException();
