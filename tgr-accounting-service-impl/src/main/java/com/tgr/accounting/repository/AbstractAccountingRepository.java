@@ -5,7 +5,7 @@ import javax.persistence.PersistenceContext;
 
 import com.tgr.fwk.repository.AbstractRepository;
 
-public class AbstractAccountingRepository<ENTITY> extends AbstractRepository<ENTITY> {
+public class AbstractAccountingRepository<ENTITY, METAMODEL> extends AbstractRepository<ENTITY, METAMODEL> {
 
 	@PersistenceContext(unitName="AccountingPersistenceUnit")
 	private EntityManager em;

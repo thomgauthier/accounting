@@ -8,7 +8,9 @@ import javax.transaction.Transactional;
 
 import org.dozer.DozerBeanMapper;
 
+import com.tgr.accounting.entity.AnnualBalanceEntity;
 import com.tgr.accounting.entity.EntryEntity;
+import com.tgr.accounting.repository.AnnualBalanceRepository;
 import com.tgr.accounting.repository.EntryRepository;
 import com.tgr.accounting.service.InternalValidationService;
 import com.tgr.accounting.service.api.dto.AnnualBalanceRequest;
@@ -18,6 +20,7 @@ import com.tgr.accounting.service.api.dto.DeleteEntryResponse;
 import com.tgr.accounting.service.api.dto.EntryRequest;
 import com.tgr.accounting.service.api.dto.EntryResponse;
 import com.tgr.accounting.service.api.dto.LoadEntryRequest;
+import com.tgr.accounting.service.api.model.AnnualBalanceModel;
 import com.tgr.accounting.service.api.model.EntryModel;
 import com.tgr.accounting.service.api.service.AccountingService;
 import com.tgr.fwk.exception.NoDataFoundException;
@@ -31,6 +34,8 @@ public class AccountingServiceImpl extends AbstractService implements Accounting
 	private InternalValidationService validationService;
 	@Inject
 	private EntryRepository entryRepository;
+	@Inject
+	private AnnualBalanceRepository annualBalanceRepository;
 	private DozerBeanMapper mapper;
 	
 	public AccountingServiceImpl() {
@@ -117,8 +122,22 @@ public class AccountingServiceImpl extends AbstractService implements Accounting
 	}
 
 	public AnnualBalanceResponse readBalance(AnnualBalanceRequest request) {
-		// TODO Auto-generated method stub
-		return new AnnualBalanceResponse();
+		
+		if (request == null) throw new ServiceException();
+		if (request.getId() == null) throw new ServiceException();
+		
+		List<AnnualBalanceEntity> balances = annualBalanceRepository.findByYear(request.getId());
+		
+		if (balances.isEmpty()) {
+			throw new ServiceException();
+		}
+		if (balances.size() > 1) {
+			throw new ServiceException();
+		}
+		
+		AnnualBalanceModel model = mapper.map(balances.get(0), AnnualBalanceModel.class);
+		
+		return new AnnualBalanceResponse(model);
 	}
 
 }

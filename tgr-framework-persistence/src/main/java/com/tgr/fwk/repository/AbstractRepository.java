@@ -7,9 +7,12 @@ import java.lang.reflect.Type;
 
 import javax.persistence.EntityManager;
 
+import com.querydsl.core.types.EntityPath;
+import com.querydsl.jpa.impl.JPAQuery;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.tgr.fwk.exception.NoDataFoundException;
 
-public abstract class AbstractRepository<ENTITY> {
+public abstract class AbstractRepository<ENTITY, METAMODEL> {
 
 	protected abstract EntityManager getEntityManager();
 	
@@ -80,5 +83,11 @@ public abstract class AbstractRepository<ENTITY> {
 	
 	public void commonTrigger(ENTITY entity) {
 		
+	}
+	
+	@SuppressWarnings("unchecked")
+	protected JPAQuery<ENTITY> buildQuery(METAMODEL metamodel) {
+		JPAQueryFactory factory = new JPAQueryFactory(getEntityManager());
+		return factory.selectFrom((EntityPath<ENTITY>) metamodel);
 	}
 }
