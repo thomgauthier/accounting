@@ -15,9 +15,9 @@ import com.tgr.fwk.entity.AbstractEntity;
 
 @Entity
 @Table(name = "COMPTE_COURANT")
-@SequenceGenerator(name = "SEQ_COMPTE_COURANT_GENERATOR", initialValue = 1, allocationSize = 1, sequenceName = "SEQ_COMPTE_COURANT")
+@SequenceGenerator(name = "SequenceGenerator", initialValue = 1, allocationSize = 1, sequenceName = "SEQ_COMPTE_COURANT")
 @AttributeOverrides({
-	@AttributeOverride(name = "id", column = @Column(name = "CC_IDENT")),
+	@AttributeOverride(name = "id", column = @Column(name = "CC_IDENT"))
 })
 public class EntryEntity extends AbstractEntity {
 

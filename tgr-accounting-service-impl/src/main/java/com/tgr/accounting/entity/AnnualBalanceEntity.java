@@ -12,9 +12,9 @@ import com.tgr.fwk.entity.AbstractEntity;
 
 @Entity
 @Table(name = "SIT_COMPTE_COURANT")
-@SequenceGenerator(name = "SEQ_SIT_COMPTE_COURANT_GENERATOR", initialValue = 1, allocationSize = 1, sequenceName = "SEQ_SIT_COMPTE_COURANT")
+@SequenceGenerator(name = "SequenceGenerator", initialValue = 1, allocationSize = 1, sequenceName = "SEQ_SIT_COMPTE_COURANT")
 @AttributeOverrides({
-	@AttributeOverride(name = "id", column = @Column(name = "SCC_IDENT")),
+	@AttributeOverride(name = "id", column = @Column(name = "SCC_IDENT"))
 })
 public class AnnualBalanceEntity extends AbstractEntity {
 
