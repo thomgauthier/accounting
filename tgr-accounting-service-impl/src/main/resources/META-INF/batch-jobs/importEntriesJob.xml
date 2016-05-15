@@ -1,0 +1,9 @@
+<job id="importEntriesJob" xmlns="http://xmlns.jcp.org/xml/ns/javaee" version="1.0">
+    <step id="firstStep" >
+        <chunk item-count="3">
+            <reader ref="entryItemReader"/>
+            <processor ref="entryItemProcessor"/>
+            <writer ref="entryItemWriter"/>
+        </chunk>    
+    </step>
+</job>

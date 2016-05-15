@@ -38,6 +38,12 @@
 			<artifactId>tgr-accounting-security</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
+		
+<!-- 		<dependency> -->
+<!-- 			<groupId>tgr-db-update</groupId> -->
+<!-- 			<artifactId>tgr-db-update</artifactId> -->
+<!-- 			<version>0.0.1-SNAPSHOT</version> -->
+<!-- 		</dependency> -->
 
 	</dependencies>
 
