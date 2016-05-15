@@ -11,12 +11,15 @@ import com.tgr.accounting.service.api.dto.AnnualBalanceRequest;
 import com.tgr.accounting.service.api.dto.AnnualBalanceResponse;
 import com.tgr.accounting.service.api.dto.EntryRequest;
 import com.tgr.accounting.service.api.dto.EntryResponse;
+import com.tgr.accounting.service.api.dto.ImportEntriesRequest;
 import com.tgr.accounting.service.api.dto.LoadEntryRequest;
 import com.tgr.accounting.service.api.dto.SearchEntryRequest;
 import com.tgr.accounting.service.api.dto.SearchEntryResponse;
 import com.tgr.accounting.service.api.model.EntryModel;
+import com.tgr.accounting.service.api.model.ImportPropertiesModel;
 import com.tgr.accounting.service.api.type.AmountType;
 import com.tgr.accounting.service.api.type.PaymentType;
+import com.tgr.fwk.dto.BooleanResponse;
 import com.tgr.fwk.exception.ServiceException;
 
 public class AccountingClient {
@@ -25,12 +28,42 @@ public class AccountingClient {
 	private static final String URI_CREATE = "http://localhost:8080/tgr-accounting-webapp/AccountingService/create";
 	private static final String URI_BALANCE = "http://localhost:8080/tgr-accounting-webapp/AccountingService/readBalance";
 	private static final String URI_SEARCH_ENTRY = "http://localhost:8080/tgr-accounting-webapp/AccountingService/searchEntry";
+	private static final String URI_IMPORT_ENTRY = "http://localhost:8080/tgr-accounting-webapp/AccountingService/importEntries";
 	
 	public static void main(String[] args) {
+
+		callBatch();
 //		create();
 //		load();
 //		searchBalance();
-		searchEntry();
+//		searchEntry();
+	}
+	
+	private static void callBatch() {
+		ClientRequest request = new ClientRequest(URI_IMPORT_ENTRY);
+		ImportPropertiesModel importPropertiesModel = new ImportPropertiesModel();
+		importPropertiesModel.setAbsoluteFilePath("P:\\Dossier perso\\Compta\\Compta-Compte-Courant.xlsx");
+		importPropertiesModel.setSheet("2016");
+		importPropertiesModel.setFromRow(83);
+		importPropertiesModel.setToRow(169);
+		request.body(MediaType.APPLICATION_JSON, new ImportEntriesRequest(importPropertiesModel));
+		request.accept(MediaType.APPLICATION_JSON_TYPE);
+		request.header("login", "toto");
+		
+		BooleanResponse entryResponse;
+		ClientResponse<BooleanResponse> clientResponse;
+		try {
+			clientResponse = request.post(BooleanResponse.class);
+			if (clientResponse.getResponseStatus().equals(Status.OK)) {
+				entryResponse = clientResponse.getEntity();
+				System.out.println("Result = " + entryResponse.getResult());
+			} else {
+				String reason = clientResponse.getEntity(String.class);
+				throw new ServiceException(reason);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	private static void searchEntry() {

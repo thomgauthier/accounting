@@ -1,5 +1,6 @@
 package com.tgr.accounting.service.impl;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +13,7 @@ import com.tgr.accounting.entity.AnnualBalanceEntity;
 import com.tgr.accounting.entity.EntryEntity;
 import com.tgr.accounting.repository.AnnualBalanceRepository;
 import com.tgr.accounting.repository.EntryRepository;
+import com.tgr.accounting.service.InternalExcelImportService;
 import com.tgr.accounting.service.InternalValidationService;
 import com.tgr.accounting.service.api.dto.AnnualBalanceRequest;
 import com.tgr.accounting.service.api.dto.AnnualBalanceResponse;
@@ -19,12 +21,15 @@ import com.tgr.accounting.service.api.dto.DeleteEntryRequest;
 import com.tgr.accounting.service.api.dto.DeleteEntryResponse;
 import com.tgr.accounting.service.api.dto.EntryRequest;
 import com.tgr.accounting.service.api.dto.EntryResponse;
+import com.tgr.accounting.service.api.dto.ImportEntriesRequest;
 import com.tgr.accounting.service.api.dto.LoadEntryRequest;
 import com.tgr.accounting.service.api.dto.SearchEntryRequest;
 import com.tgr.accounting.service.api.dto.SearchEntryResponse;
 import com.tgr.accounting.service.api.model.AnnualBalanceModel;
 import com.tgr.accounting.service.api.model.EntryModel;
+import com.tgr.accounting.service.api.model.ImportPropertiesModel;
 import com.tgr.accounting.service.api.service.AccountingService;
+import com.tgr.fwk.dto.BooleanResponse;
 import com.tgr.fwk.exception.NoDataFoundException;
 import com.tgr.fwk.exception.ServiceException;
 import com.tgr.fwk.service.AbstractService;
@@ -34,6 +39,8 @@ public class AccountingServiceImpl extends AbstractService implements Accounting
 
 	@Inject
 	private InternalValidationService validationService;
+	@Inject
+	private InternalExcelImportService excelImportService;
 	@Inject
 	private EntryRepository entryRepository;
 	@Inject
@@ -67,16 +74,21 @@ public class AccountingServiceImpl extends AbstractService implements Accounting
 		}
 		
 		validateValues(request.getModel());
+		EntryModel result = create(request.getModel());
 		
-		request.getModel().setId(null);
+		return new EntryResponse(result);
+	}
+	
+	private EntryModel create(EntryModel model) {
+		model.setId(null);
 		
-		EntryEntity entity = mapper.map(request.getModel(), EntryEntity.class);
+		EntryEntity entity = mapper.map(model, EntryEntity.class);
 		
 		entity = entryRepository.insert(entity);
 		
 		EntryModel result = mapper.map(entity, EntryModel.class);
 		
-		return new EntryResponse(result);
+		return result;
 	}
 
 	public EntryResponse modify(EntryRequest request) {
@@ -157,4 +169,28 @@ public class AccountingServiceImpl extends AbstractService implements Accounting
 		return new AnnualBalanceResponse(model);
 	}
 
+	public BooleanResponse importEntries(ImportEntriesRequest request) {
+		
+		ImportPropertiesModel model = request.getModel();
+		
+//		JobOperator jo = BatchRuntime.getJobOperator();
+//		jo.start("importEntriesJob", new Properties());
+		
+		File file = new File(model.getAbsoluteFilePath());
+		if (!file.exists()) {
+			return new BooleanResponse(Boolean.FALSE);
+		}
+		if (file.isDirectory()) {
+			return new BooleanResponse(Boolean.FALSE);
+		}
+		
+		List<EntryModel> models = excelImportService.importFile(file, model, EntryModel.class);
+		
+		for (EntryModel entryModel : models) {
+			create(entryModel);
+		}
+		
+		return new BooleanResponse(Boolean.TRUE);
+	}
+	
 }

@@ -9,9 +9,11 @@ import com.tgr.accounting.service.api.dto.DeleteEntryRequest;
 import com.tgr.accounting.service.api.dto.DeleteEntryResponse;
 import com.tgr.accounting.service.api.dto.EntryRequest;
 import com.tgr.accounting.service.api.dto.EntryResponse;
+import com.tgr.accounting.service.api.dto.ImportEntriesRequest;
 import com.tgr.accounting.service.api.dto.LoadEntryRequest;
 import com.tgr.accounting.service.api.dto.SearchEntryRequest;
 import com.tgr.accounting.service.api.dto.SearchEntryResponse;
+import com.tgr.fwk.dto.BooleanResponse;
 import com.tgr.fwk.service.Service;
 
 
@@ -41,4 +43,8 @@ public interface AccountingService extends Service {
 	@POST
 	@Path("/readBalance")
 	AnnualBalanceResponse readBalance(AnnualBalanceRequest request);
+	
+	@POST
+	@Path("/importEntries")
+	BooleanResponse importEntries(ImportEntriesRequest request);
 }
