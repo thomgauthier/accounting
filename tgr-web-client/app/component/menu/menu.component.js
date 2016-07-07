@@ -12,6 +12,9 @@ var core_1 = require('@angular/core');
 var MenuComponent = (function () {
     function MenuComponent() {
     }
+    MenuComponent.prototype.addEntry = function (entryComponent) {
+        entries.push(entryComponent);
+    };
     MenuComponent = __decorate([
         core_1.Component({
             selector: 'menu-component',
