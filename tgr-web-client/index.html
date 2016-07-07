@@ -15,46 +15,18 @@
 
     <!-- 2. Load our 'modules' -->
     <script src="systemjs.config.js"></script>
-   	<script src='app/js/serviceCall.js'></script>
     <script>
     	System.import('app').catch(function(err){ console.error(err); });
     </script>
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-	<script src='app/js/menuSelection.js'></script>
 		
 	</head>
 
   <!-- 3. Display the application -->
 	<body>
-<!--     <menu-component>Loading...</menu-component> -->
-<!--     <content-component>Loading...</content-component> -->
 	
-		<div id="menu">
-			<ul>
-				<li id="statusComponent" class="menuEntry">
-					<a onclick="select('status.html', 'content');">
-						<img alt="entryComponent" src="app/img/pulse.png"/>
-					</a>
-				</li>
-				<li id="entryComponent" class="menuEntry">
-					<a onclick="select('entry.html', 'content');call();">
-						<img alt="entryComponent" src="app/img/add.png"/>
-					</a>
-				</li>
-			</ul>
-		</div>
-		
-		<div id="content">
-		Loading...
-		</div>
-		<my-app>
-		Loading...
-		</my-app>
-
-		<script type="text/javascript">
-// 			select('status.html', 'content');
-// 			call();
-		</script>
+		<accounting-app>
+			Loading...
+		</accounting-app>
 
 	</body>
 
