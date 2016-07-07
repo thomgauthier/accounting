@@ -9,8 +9,8 @@ import { MenuItemComponent } from 'app/component/menu-item/menu-item.component';
 export class AppComponent {
     menu: MenuComponent;
     constructor() {
-        menu = new MenuComponent();
-        menu.addEntry(new MenuItemComponent('entry1', 'app/img/pulse.png'));
+        this.menu = new MenuComponent();
+        this.menu.addEntry(new MenuItemComponent('entry1', 'app/img/pulse.png'));
     }
 
 }

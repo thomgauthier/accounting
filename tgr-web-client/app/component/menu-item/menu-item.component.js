@@ -9,22 +9,19 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var menu_component_1 = require('app/component/menu/menu.component');
-var menu_item_component_1 = require('app/component/menu-item/menu-item.component');
-var AppComponent = (function () {
-    function AppComponent() {
-        this.menu = new menu_component_1.MenuComponent();
-        this.menu.addEntry(new menu_item_component_1.MenuItemComponent('entry1', 'app/img/pulse.png'));
+var MenuItemComponent = (function () {
+    function MenuItemComponent(name, image) {
+        this.name = name;
+        this.image = image;
     }
-    AppComponent = __decorate([
+    MenuItemComponent = __decorate([
         core_1.Component({
-            selector: 'accounting-app',
-            templateUrl: 'app/application.html',
-            directives: [menu_component_1.MenuComponent]
+            selector: 'menu-item-component',
+            templateUrl: 'app/component/menu-item/menu-item.html'
         }), 
-        __metadata('design:paramtypes', [])
-    ], AppComponent);
-    return AppComponent;
+        __metadata('design:paramtypes', [String, String])
+    ], MenuItemComponent);
+    return MenuItemComponent;
 }());
-exports.AppComponent = AppComponent;
-//# sourceMappingURL=app.component.js.map
+exports.MenuItemComponent = MenuItemComponent;
+//# sourceMappingURL=menu-item.component.js.map
