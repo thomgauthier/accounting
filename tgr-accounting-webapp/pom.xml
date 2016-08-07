@@ -24,6 +24,6 @@
 	</dependencies>
 
 	<build>
-		<finalName>tgr-accounting-webapp</finalName>
+		<finalName>Accounting</finalName>
 	</build>
 </project>
