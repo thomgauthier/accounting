@@ -10,6 +10,8 @@ import com.tgr.accounting.service.api.dto.DeleteEntryResponse;
 import com.tgr.accounting.service.api.dto.EntryRequest;
 import com.tgr.accounting.service.api.dto.EntryResponse;
 import com.tgr.accounting.service.api.dto.ImportEntriesRequest;
+import com.tgr.accounting.service.api.dto.LoadAxesRequest;
+import com.tgr.accounting.service.api.dto.LoadAxesResponse;
 import com.tgr.accounting.service.api.dto.LoadEntryRequest;
 import com.tgr.accounting.service.api.dto.SearchEntryRequest;
 import com.tgr.accounting.service.api.dto.SearchEntryResponse;
@@ -47,4 +49,8 @@ public interface AccountingService extends Service {
 	@POST
 	@Path("/importEntries")
 	BooleanResponse importEntries(ImportEntriesRequest request);
+	
+	@POST
+	@Path("/loadAxes")
+	LoadAxesResponse loadAxes(LoadAxesRequest request);
 }

@@ -22,6 +22,8 @@ import com.tgr.accounting.service.api.dto.DeleteEntryResponse;
 import com.tgr.accounting.service.api.dto.EntryRequest;
 import com.tgr.accounting.service.api.dto.EntryResponse;
 import com.tgr.accounting.service.api.dto.ImportEntriesRequest;
+import com.tgr.accounting.service.api.dto.LoadAxesRequest;
+import com.tgr.accounting.service.api.dto.LoadAxesResponse;
 import com.tgr.accounting.service.api.dto.LoadEntryRequest;
 import com.tgr.accounting.service.api.dto.SearchEntryRequest;
 import com.tgr.accounting.service.api.dto.SearchEntryResponse;
@@ -191,6 +193,13 @@ public class AccountingServiceImpl extends AbstractService implements Accounting
 		}
 		
 		return new BooleanResponse(Boolean.TRUE);
+	}
+
+	public LoadAxesResponse loadAxes(LoadAxesRequest request) {
+		
+		List<String> results = entryRepository.loadAxes(request.getCriteria());
+		
+		return new LoadAxesResponse(results);
 	}
 	
 }

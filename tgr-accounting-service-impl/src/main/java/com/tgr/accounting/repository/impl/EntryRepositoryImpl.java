@@ -1,15 +1,19 @@
 package com.tgr.accounting.repository.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
+import com.querydsl.core.types.dsl.StringPath;
 import com.querydsl.jpa.impl.JPAQuery;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.tgr.accounting.entity.EntryEntity;
 import com.tgr.accounting.entity.QEntryEntity;
 import com.tgr.accounting.repository.AbstractAccountingRepository;
 import com.tgr.accounting.repository.EntryRepository;
+import com.tgr.accounting.service.api.criteria.AxesCriteria;
 import com.tgr.accounting.service.api.criteria.EntryCriteria;
 import com.tgr.accounting.service.api.type.AmountType;
 
@@ -81,5 +85,34 @@ public class EntryRepositoryImpl extends AbstractAccountingRepository<EntryEntit
 		}
 		
 		return query.fetch();
+	}
+
+	public List<String> loadAxes(AxesCriteria criteria) {
+		
+		JPAQueryFactory factory = new JPAQueryFactory(getEntityManager());
+		
+		QEntryEntity qEntity = QEntryEntity.entryEntity;
+		
+		StringPath path = null;
+		switch(criteria.getAxe()) {
+		case 1:
+			path = qEntity.axis1;
+			break;
+		case 2:
+			path = qEntity.axis2;
+			break;
+		case 3:
+			path = qEntity.axis3;
+			break;
+		default:
+			return new ArrayList<String>(0);
+		}
+		
+		List<String> results = new ArrayList<String>();
+		for (String axe : factory.select(path).from(qEntity).where(path.isNotEmpty()).distinct().orderBy(path.asc()).fetch()) {
+			results.add(axe);
+		}
+		
+		return results;
 	}
 }
