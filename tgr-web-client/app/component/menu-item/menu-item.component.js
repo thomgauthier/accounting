@@ -9,17 +9,25 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
+var content_frame_component_1 = require('../content/content-frame.component');
+var entry_component_1 = require('../entry/entry.component');
 var MenuItemComponent = (function () {
-    function MenuItemComponent(name, image) {
-        this.name = name;
+    function MenuItemComponent(id, templateUrl, image, contentFrame) {
+        this.id = id;
+        this.templateUrl = templateUrl;
         this.image = image;
+        this.contentFrame = contentFrame;
     }
+    MenuItemComponent.prototype.onSelect = function () {
+        this.contentFrame.display(new entry_component_1.EntryComponent());
+    };
     MenuItemComponent = __decorate([
         core_1.Component({
             selector: 'menu-item-component',
-            templateUrl: 'app/component/menu-item/menu-item.html'
+            templateUrl: 'app/component/menu-item/menu-item.html',
+            providers: [content_frame_component_1.ContentFrameComponent]
         }), 
-        __metadata('design:paramtypes', [String, String])
+        __metadata('design:paramtypes', [String, String, String, content_frame_component_1.ContentFrameComponent])
     ], MenuItemComponent);
     return MenuItemComponent;
 }());

@@ -9,18 +9,19 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var menu_component_1 = require('app/component/menu/menu.component');
-var menu_item_component_1 = require('app/component/menu-item/menu-item.component');
+var menu_component_1 = require('./component/menu/menu.component');
+var menu_item_component_1 = require('./component/menu-item/menu-item.component');
+var content_frame_component_1 = require('./component/content/content-frame.component');
 var AppComponent = (function () {
     function AppComponent() {
-        this.menu = new menu_component_1.MenuComponent();
-        this.menu.addEntry(new menu_item_component_1.MenuItemComponent('entry1', 'app/img/pulse.png'));
+        this.contentFrame = new content_frame_component_1.ContentFrameComponent();
+        this.menu = new menu_component_1.MenuComponent(this.contentFrame);
     }
     AppComponent = __decorate([
         core_1.Component({
             selector: 'accounting-app',
             templateUrl: 'app/application.html',
-            directives: [menu_component_1.MenuComponent]
+            directives: [menu_component_1.MenuComponent, menu_item_component_1.MenuItemComponent, content_frame_component_1.ContentFrameComponent]
         }), 
         __metadata('design:paramtypes', [])
     ], AppComponent);

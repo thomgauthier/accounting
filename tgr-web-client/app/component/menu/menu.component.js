@@ -9,18 +9,24 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
+var menu_item_component_1 = require('../menu-item/menu-item.component');
+var content_frame_component_1 = require('../content/content-frame.component');
 var MenuComponent = (function () {
-    function MenuComponent() {
+    function MenuComponent(contentFrame) {
+        this.entries = new Array();
+        this.addEntry(new menu_item_component_1.MenuItemComponent('statusComponent', 'status.html', 'app/img/pulse.png', contentFrame));
+        this.addEntry(new menu_item_component_1.MenuItemComponent('entryComponent', 'entry.html', 'app/img/add.png', contentFrame));
     }
     MenuComponent.prototype.addEntry = function (entryComponent) {
-        entries.push(entryComponent);
+        this.entries.push(entryComponent);
     };
     MenuComponent = __decorate([
         core_1.Component({
             selector: 'menu-component',
-            templateUrl: 'app/component/menu/menu.html'
+            templateUrl: 'app/component/menu/menu.html',
+            providers: [content_frame_component_1.ContentFrameComponent]
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [content_frame_component_1.ContentFrameComponent])
     ], MenuComponent);
     return MenuComponent;
 }());

@@ -3,16 +3,11 @@
 		
 	</head>
 	<body>
-		<div id="menu">
+		<div>
 			<ul>
-				<li id="statusComponent" class="menuEntry">
-					<a onclick="select('status.html', 'content');">
-						<img alt="entryComponent" src="app/img/pulse.png"/>
-					</a>
-				</li>
-				<li id="entryComponent" class="menuEntry">
-					<a onclick="select('entry.html', 'content');">
-						<img alt="entryComponent" src="app/img/add.png"/>
+				<li *ngFor="let item of entries" class="menuEntry" (click)="item.onSelect()">
+					<a>
+						<img alt="entryComponent" src="{{item.image}}"/>
 					</a>
 				</li>
 			</ul>

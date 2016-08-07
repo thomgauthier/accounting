@@ -1,16 +1,18 @@
 import { Component } from '@angular/core';
-import { MenuComponent } from 'app/component/menu/menu.component';
-import { MenuItemComponent } from 'app/component/menu-item/menu-item.component';
+import { MenuComponent } from './component/menu/menu.component';
+import { MenuItemComponent } from './component/menu-item/menu-item.component';
+import { ContentFrameComponent } from './component/content/content-frame.component';
 @Component({
     selector: 'accounting-app',
     templateUrl: 'app/application.html',
-    directives: [MenuComponent]
+    directives: [MenuComponent, MenuItemComponent, ContentFrameComponent]
 })
 export class AppComponent {
     menu: MenuComponent;
+    contentFrame: ContentFrameComponent;
     constructor() {
-        this.menu = new MenuComponent();
-        this.menu.addEntry(new MenuItemComponent('entry1', 'app/img/pulse.png'));
+    	this.contentFrame = new ContentFrameComponent();
+        this.menu = new MenuComponent(this.contentFrame);
     }
 
 }
